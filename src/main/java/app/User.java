@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class User {
     private String name;
     private String address;
-    private static int id;
-    private final int userId;
+    private static int id;   //счетчик ID
+    private static int userId;
 
     public User(String name) {
         this.name = name;
@@ -41,7 +41,9 @@ public class User {
         return userId;
     }
 
-
+    public static void setUserId(int id) {
+        userId=id;
+    }
 
     @Override
     public boolean equals(Object o) {

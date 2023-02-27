@@ -15,7 +15,7 @@ public class WorkWithDataBase {
             statement = connection.createStatement();
 
             statement.executeUpdate("INSERT INTO Accounts ( accountId,userId,currency) VALUES ('"
-                    + account.getUserAccountId() + "', '" + user.getUserId() + "', '" + account.getUserCurrency() + "')");
+                    + UserAccount.getAccountID() + "', '" + user.getUserId() + "', '" + account.getUserCurrency() + "')");
 
             statement.close();
             connection.close();
@@ -43,10 +43,10 @@ public class WorkWithDataBase {
             statement = connection.createStatement();
 
             statement.executeUpdate("UPDATE Accounts SET balance = '" + account.getUserBalance()
-                    + "' WHERE accountId= " + account.getUserAccountId());
+                    + "' WHERE accountId= " + UserAccount.getAccountID());
 
             statement.executeUpdate("INSERT INTO Transactions (transactionId, accountId, amount) VALUES ('"
-                    + account.getUserTransactionID() + "', '" + account.getUserAccountId() + "', '" + account.getUserAmount() + "')");
+                    + UserAccount.getTransactionID() + "', '" + UserAccount.getAccountID() + "', '" + account.getUserAmount() + "')");
 
             statement.close();
             connection.close();
@@ -98,10 +98,11 @@ public class WorkWithDataBase {
 
     //метод для проверки на дубликат пользователя
 
-    public boolean checkAccountForaMatch(String userName,String userAddress) {
+    public boolean checkUserForaMatch(String userName, String userAddress) {
         Connection connection = null;
         Statement statement = null;
         boolean isExist = false;
+        int userIDinDataBase = 0;
         try {
             connection =
                     DriverManager.getConnection("jdbc:sqlite:src/main/resources/mydb.db");
@@ -111,7 +112,11 @@ public class WorkWithDataBase {
                 if (rs.getString("name").equalsIgnoreCase(userName)
                         && rs.getString("address").equalsIgnoreCase(userAddress)) {
                     isExist = true;
+                } else {
+                    ++userIDinDataBase;
+                    User.setUserId(userIDinDataBase + 1);
                 }
+
             }
             statement.close();
             connection.close();
@@ -129,7 +134,74 @@ public class WorkWithDataBase {
                 System.out.println("Can't close the connection");
             }
         }
+
         return isExist;
+    }
+
+    public void checkTransactionIDForaMatch() {
+        Connection connection = null;
+        Statement statement = null;
+        int userTransactionIDinDataBase = 0;
+        try {
+            connection =
+                    DriverManager.getConnection("jdbc:sqlite:src/main/resources/mydb.db");
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT transactionId FROM Transactions");
+            while (rs.next()) {
+                ++userTransactionIDinDataBase;
+
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Can't close the connection");
+            }
+        }
+
+        UserAccount.setTransactionID(userTransactionIDinDataBase + 1);
+    }
+
+    public void checkAccountBeforeAdding() {
+        Connection connection = null;
+        Statement statement = null;
+        int userAccountIDinDataBase = 0;
+        try {
+            connection =
+                    DriverManager.getConnection("jdbc:sqlite:src/main/resources/mydb.db");
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT accountId FROM Accounts");
+            while (rs.next()) {
+
+                ++userAccountIDinDataBase;
+
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Can't close the connection");
+            }
+        }
+        UserAccount.setAccountID(userAccountIDinDataBase + 1);
     }
 }
 

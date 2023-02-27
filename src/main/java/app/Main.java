@@ -23,7 +23,7 @@ public class Main {
             scan = new Scanner(System.in);
             System.out.println("Enter your NAME than enter your EMAIL:");
             newUser = new User(scan.nextLine(), scan.nextLine());
-            while (addDataIntoDataBase.checkAccountForaMatch(newUser.getName(), newUser.getAddress())) {
+            while (addDataIntoDataBase.checkUserForaMatch(newUser.getName(), newUser.getAddress())) {
                 System.out.println("Enter another name:");
                 newUser.setName(scan.nextLine());
                 System.out.println("Enter another address:");
@@ -43,7 +43,7 @@ public class Main {
                     System.out.println("Enter currency type: 1-EURO, 2-DOLLAR, 3-RUSSIAN_RUBLE,  4-BELARUSIAN_RUBLE;");
 
                     newUserAccount = new UserAccount(newUser, Currency.currencySelection(scan.nextInt()));
-
+                    addDataIntoDataBase.checkAccountBeforeAdding();
                     addDataIntoDataBase.addAccountIntoDb(newUser, newUserAccount);
 
                     int choose = 3;
@@ -59,10 +59,12 @@ public class Main {
                         if (choose == 1) {
                             System.out.println("Enter your amount:");
                             userTransaction.userIncrementTransaction(newUserAccount, scan.nextInt());  //добавляем на счет
+                            addDataIntoDataBase.checkTransactionIDForaMatch();
                             addDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв БД
                         } else if (choose == 2) {
                             System.out.println("Enter your amount:");
                             userTransaction.userDecrementTransaction(newUserAccount, scan.nextInt());  //снимаем со счета
+                            addDataIntoDataBase.checkTransactionIDForaMatch();
                             addDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв БД
                         }
 

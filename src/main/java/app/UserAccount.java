@@ -6,6 +6,7 @@ public class UserAccount {
     private final int userAccountId;
     private int userBalance;
     private static int userTransactionID;
+    private static int transactionID;  //счетчик транзакций
     private int userAmount;
 
     private Currency userCurrency;
@@ -56,6 +57,22 @@ public class UserAccount {
 
     public void setUserBalance(int userBalance) {
         this.userBalance = userBalance;
+    }
+
+    public static void setAccountID(int accountID) {
+        UserAccount.accountID = accountID;
+    }
+
+    public static int getAccountID() {
+        return accountID;
+    }
+
+    public static int getTransactionID() {
+        return transactionID;
+    }
+
+    public static void setTransactionID(int transactionID) {
+        UserAccount.transactionID = transactionID;
     }
 
     //    public void userIncrementTransaction(int amount) {
