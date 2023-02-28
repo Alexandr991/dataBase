@@ -3,8 +3,6 @@ package app;
 import java.sql.*;
 
 public class WorkWithDataBase {
-
-
     Connection connection = null;
     Statement statement = null;
 
@@ -116,7 +114,6 @@ public class WorkWithDataBase {
                     ++userIDinDataBase;
                     User.setUserId(userIDinDataBase + 1);
                 }
-
             }
             statement.close();
             connection.close();
@@ -202,6 +199,53 @@ public class WorkWithDataBase {
             }
         }
         UserAccount.setAccountID(userAccountIDinDataBase + 1);
+    }
+
+    //данный метод предназначен для определения существует ли пользователь с таким именем и адресом и сколько у него аккаунтов.
+    public void findUserAccountsInDataBase(String userName, String userAddress) {
+        Connection connection = null;
+        Statement statement = null;
+        int countAccountID = 0;
+        try {
+            connection =
+                    DriverManager.getConnection("jdbc:sqlite:src/main/resources/mydb.db");
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT name, address, userID FROM Users");
+            while (rs.next()) {
+                if (rs.getString("name").equalsIgnoreCase(userName)
+                        && rs.getString("address").equalsIgnoreCase(userAddress)) {
+                    System.out.println("This user is exist in data base.");
+
+                    ResultSet rs2 = statement.executeQuery("SELECT currency,balance FROM Accounts Where userID= '"
+                            + rs.getString("userId") + "'");
+                    while (rs2.next()) {
+                        countAccountID++;
+                        System.out.println("Number of account: " + countAccountID + " Currency: " + rs2.getString("currency") + " User balance: " + rs2.getString("balance"));
+
+                    }
+                    System.out.println("User has " + countAccountID + " accounts.");
+                }
+            }
+            if (countAccountID == 0) {
+                System.out.println("This user is not exist.");
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Can't close the connection");
+            }
+        }
+
     }
 }
 
