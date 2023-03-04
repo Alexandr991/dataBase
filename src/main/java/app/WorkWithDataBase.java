@@ -97,8 +97,7 @@ public class WorkWithDataBase {
     //метод для проверки на дубликат пользователя
 
     public boolean checkUserForaMatch(String userName, String userAddress) {
-        Connection connection = null;
-        Statement statement = null;
+
         boolean isExist = false;
         int userIDinDataBase = 0;
         try {
@@ -136,8 +135,7 @@ public class WorkWithDataBase {
     }
 
     public void checkTransactionIDForaMatch() {
-        Connection connection = null;
-        Statement statement = null;
+
         int userTransactionIDinDataBase = 0;
         try {
             connection =
@@ -169,8 +167,7 @@ public class WorkWithDataBase {
     }
 
     public void checkAccountBeforeAdding() {
-        Connection connection = null;
-        Statement statement = null;
+
         int userAccountIDinDataBase = 0;
         try {
             connection =
@@ -203,8 +200,7 @@ public class WorkWithDataBase {
 
     //данный метод предназначен для определения существует ли пользователь с таким именем и адресом и сколько у него аккаунтов.
     public void findUserAccountsInDataBase(String userName, String userAddress) {
-        Connection connection = null;
-        Statement statement = null;
+
         int countAccountID = 0;
         try {
             connection =
@@ -216,11 +212,11 @@ public class WorkWithDataBase {
                         && rs.getString("address").equalsIgnoreCase(userAddress)) {
                     System.out.println("This user is exist in data base.");
 
-                    ResultSet rs2 = statement.executeQuery("SELECT currency,balance FROM Accounts Where userID= '"
+                    ResultSet rs2 = statement.executeQuery("SELECT accountId, currency, balance FROM Accounts Where userID= '"
                             + rs.getString("userId") + "'");
                     while (rs2.next()) {
                         countAccountID++;
-                        System.out.println("Number of account: " + countAccountID + " Currency: " + rs2.getString("currency") + " User balance: " + rs2.getString("balance"));
+                        System.out.println("Number of account: " + countAccountID + " AccountId: " + rs2.getInt("accountId") + " Currency: " + rs2.getString("currency") + " User balance: " + rs2.getString("balance"));
 
                     }
                     System.out.println("User has " + countAccountID + " accounts.");
@@ -247,5 +243,7 @@ public class WorkWithDataBase {
         }
 
     }
+
+
 }
 

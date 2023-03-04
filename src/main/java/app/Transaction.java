@@ -1,26 +1,6 @@
 package app;
 
 public class Transaction {
-//    private static int transactionID;
-//    private final int userTransactionID;
-//    private int amount;
-//
-//
-//    public Transaction() {
-//
-//        this.userTransactionID = ++transactionID;
-//        this.amount = amount;
-//    }
-//
-//    public int getUserTransactionID() {
-//        return userTransactionID;
-//    }
-//
-//    public int getAmount() {
-//        return amount;
-//    }
-    //                               данные методы перенесены в USER ACCOUNT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 
     public void userIncrementTransaction(UserAccount account, int amount) {
         if (amount > 100_000_000) {
@@ -46,11 +26,4 @@ public class Transaction {
         }
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "Transaction: " + "\n" +
-//                "transactionID=" + userTransactionID + "\n" +
-//                "amount=" + amount;
-//    }
 }

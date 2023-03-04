@@ -75,28 +75,7 @@ public class UserAccount {
         UserAccount.transactionID = transactionID;
     }
 
-    //    public void userIncrementTransaction(int amount) {
-//        if (amount > 100_000_000) {
-//            System.out.println("You can't add so much!");
-//        } else if ((getUserBalance() + amount) > 2_000_000_000) {
-//            System.out.println("We can't add your money, cause your balance can't be more then 2_000_000_000! ");
-//        } else {
-//            setUserBalance(getUserBalance() + amount);
-//             new Transaction( amount);
-//        }
-//    }
-//
-//    public void userDecrementTransaction(int amount) {
-//        if (amount > 100_000_000) {
-//            System.out.println("You can't withdraw so much!");
-//        } else if (getUserBalance() - amount < 0) {
-//            System.out.println("You can't withdraw that much, cause in your balance don't enough money! ");
-//        } else {
-//            setUserBalance(getUserBalance() - amount);
-//            new Transaction( amount);
-//        }
-//    }
-//
+
     @Override
     public String toString() {
         return "UserAccount: " + "\n" +

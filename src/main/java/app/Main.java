@@ -20,13 +20,14 @@ public class Main {
         do {
             try {
                 scan = new Scanner(System.in);
-                System.out.println("Would you find user o create user?");
+                System.out.println("Would you like find user o create user?");
                 System.out.println("Enter number '1' to find user, \n enter number '2' to create user, \n enter number '3' to quit. ");
                 decision = scan.nextInt();
                 if (decision == 1) {
                     //тест метода найти пользователя в БД
-                    System.out.println("Enter your NAME than enter your EMAIL:");
+                    System.out.println("Enter your NAME: ");
                     String name = scan.next();
+                    System.out.println("Enter your EMAIL: ");
                     String address = scan.next();
                     workWithDataIntoDataBase.findUserAccountsInDataBase(name, address);
 
@@ -36,8 +37,11 @@ public class Main {
 
                     // создаём пользователя и добавляем в БД
                     scan = new Scanner(System.in);
-                    System.out.println("Enter your NAME than enter your EMAIL:");
-                    newUser = new User(scan.nextLine(), scan.nextLine());
+                    System.out.println("Enter your NAME: ");
+                    String name = scan.next();
+                    System.out.println("Enter your EMAIL: ");
+                    String address = scan.next();
+                    newUser = new User(name,address);
                     while (workWithDataIntoDataBase.checkUserForaMatch(newUser.getName(), newUser.getAddress())) {
                         System.out.println("Enter another name:");
                         newUser.setName(scan.nextLine());
@@ -75,12 +79,12 @@ public class Main {
                                         System.out.println("Enter your amount:");
                                         userTransaction.userIncrementTransaction(newUserAccount, scan.nextInt());  //добавляем на счет
                                         workWithDataIntoDataBase.checkTransactionIDForaMatch();
-                                        workWithDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв БД
+                                        workWithDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв в БД
                                     } else if (choose == 2) {
                                         System.out.println("Enter your amount:");
                                         userTransaction.userDecrementTransaction(newUserAccount, scan.nextInt());  //снимаем со счета
                                         workWithDataIntoDataBase.checkTransactionIDForaMatch();
-                                        workWithDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв БД
+                                        workWithDataIntoDataBase.addTransactionIntoDb(newUserAccount);  // записываемв в БД
                                     } else if (choose == 3) {
                                         continue;
                                     } else {
@@ -100,7 +104,6 @@ public class Main {
                 } else {
                     throw new InputMismatchException();
                 }
-                scan.close();
             } catch (InputMismatchException e) {
                 System.out.println("You entered incorrect number!");
             }

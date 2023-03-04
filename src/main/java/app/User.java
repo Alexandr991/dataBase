@@ -1,8 +1,8 @@
 package app;
 
-import java.util.InputMismatchException;
+
 import java.util.Objects;
-import java.util.Scanner;
+
 
 public class User {
     private String name;
@@ -42,7 +42,7 @@ public class User {
     }
 
     public static void setUserId(int id) {
-        userId=id;
+        userId = id;
     }
 
     @Override
